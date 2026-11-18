@@ -1,0 +1,14 @@
+.muted { color: var(--muted); margin: 0 0 14px; }
+.stats { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 4px 14px; margin-bottom: 8px; }
+.stats input, .range input { display: block; width: 100%; margin-top: 5px; font-variant-numeric: tabular-nums; }
+.range { display: grid; grid-template-columns: repeat(2, minmax(90px, 1fr)) minmax(160px, 2fr); gap: 12px; align-items: center; }
+.range label { margin: 0; }
+.runes { display: flex; align-items: center; justify-content: flex-end; gap: 8px; color: var(--gold); font-size: 18px; font-weight: 650; }
+.result { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 14px; margin: 4px 0 15px; }
+.result strong { color: var(--gold); font-size: 20px; }
+.result span { color: var(--muted); }
+.table { width: 100%; border-collapse: collapse; font-size: 13px; font-variant-numeric: tabular-nums; }
+.table td, .table th { padding: 7px 5px; border-bottom: 1px solid var(--line); text-align: right; }
+.table thead th { color: var(--muted); font-weight: 500; }
+.table th:first-child { text-align: left; }
+@media (max-width: 740px) { .runes { grid-column: 1 / -1; justify-content: flex-start; } .range { grid-template-columns: 1fr 1fr; } }

@@ -1,0 +1,29 @@
+.journey, .tools, .filters, .row, .row label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.journey { align-items: flex-end; flex-wrap: wrap; gap: 16px; margin-bottom: 16px; }
+.journey label { flex: 1 1 180px; margin: 0; }
+.journey select { display: block; width: 100%; margin-top: 4px; }
+.tools { flex-wrap: wrap; gap: 6px; padding-bottom: 2px; }
+.categories { display: grid; grid-template-columns: repeat(auto-fit, minmax(97px, 1fr)); gap: 6px; }
+.categories button { display: grid; align-content: start; gap: 4px; padding: 10px; text-align: left; border: 1px solid var(--line); border-radius: 7px; background: var(--surface); color: var(--muted); }
+.categories button:hover { border-color: #64745f; }
+.categories button[aria-pressed=true] { border-color: #8b7951; background: #343126; color: #f3deb0; }
+.categories button > span:first-child { font-size: 12px; font-weight: 600; }
+.progress { font-size: 16px; font-weight: 600; font-variant-numeric: tabular-nums; }
+.filters { margin-bottom: 12px; flex-wrap: wrap; }
+.filters input[type=search] { flex: 1 1 156px; width: auto; min-width: 0; }
+.filters label { align-items: center; white-space: nowrap; }
+.filters label input { margin: 0; }
+.rows { display: grid; }
+.row { border-top: 1px solid var(--line); }
+.row label { gap: 12px; flex: 1; min-width: 0; padding: 9px 4px; cursor: pointer; }
+.row label:hover { background-color: #ffffff05; }
+.row label input { flex-shrink: 0; width: 16px; height: 16px; accent-color: var(--gold); }
+.row strong, .row small { display: block; overflow-wrap: anywhere; }
+.row strong { font-size: 14px; font-weight: 550; }
+.row small, .quantity { font-size: 12px; color: var(--muted); }
+.row input:checked + span > strong { color: var(--sage); }
+.quantity { margin-left: auto; padding-right: 5px; white-space: nowrap; }

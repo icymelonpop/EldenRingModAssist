@@ -1,0 +1,9 @@
+node_modules/
+.next/
+out/
+dist/
+src-tauri/target/
+src-tauri/gen/
+*.tsbuildinfo
+.env*
+!.env.example

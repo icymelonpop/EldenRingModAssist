@@ -1,0 +1,63 @@
+.ring-shell .ring-topbar {
+  grid-template-columns: minmax(170px,1fr) minmax(150px,min(27vw,330px)) minmax(max-content,1fr);
+  gap: clamp(10px,1.6vw,22px);
+  padding-inline: 12px 6px;
+  user-select: none;
+}
+.ring-header-brand, .ring-header-tools { align-self: stretch; }
+/* The WebView checks the actual hit element for the native drag attribute. */
+.ring-brand * { pointer-events: none; }
+.ring-header-tools { gap: 6px; }
+.ring-current-page { margin-inline-end: 4px; white-space: nowrap; }
+.ring-theme-switch, .ring-caption-btn {
+  display: inline-grid;
+  place-items: center;
+  flex: none;
+  padding: 0;
+  color: var(--muted);
+  border: 1px solid transparent;
+  border-radius: 4px;
+  background: transparent;
+}
+.ring-theme-switch { width: 34px; height: 34px; color: var(--gold); }
+.ring-window-controls {
+  position: relative;
+  display: flex;
+  align-items: center;
+  padding-inline-start: 6px;
+  margin-inline-start: 4px;
+  border-inline-start: 1px solid var(--line);
+}
+.ring-caption-btn { width: 39px; height: 34px; }
+.ring-caption-btn svg { width: 16px; height: 16px; }
+.ring-theme-switch:hover, .ring-caption-btn:hover {
+  color: var(--white);
+  background: var(--surface-2);
+  border-color: var(--line);
+}
+.ring-caption-btn.ring-caption-close:hover { color: #fff6f2; background: #99483e; border-color: #a5594e; }
+.ring-caption-error {
+  position: absolute;
+  top: calc(100% + 5px);
+  inset-inline-end: 0;
+  width: max-content;
+  padding: 5px 10px;
+  color: var(--white);
+  background: var(--er-dialog);
+  border: 1px solid var(--line);
+}
+@media (max-width: 980px) {
+  .ring-header-tools > .action span { display: none; }
+  .ring-header-tools > .action { padding-inline: 7px; }
+}
+@media (max-width: 650px) {
+  .ring-shell .ring-topbar { grid-template-columns: auto minmax(30px,1fr) auto; gap: 5px; padding-inline: 5px; }
+  .ring-header-tools { gap: 2px; }
+  .ring-window-controls { padding-inline-start: 3px; margin-inline-start: 2px; }
+  .ring-caption-btn { width: 30px; }
+  .ring-search-trigger { justify-content: center; }
+  .ring-search-trigger span, .ring-search-trigger kbd { display: none; }
+}
+@media (forced-colors: active) {
+  .ring-caption-btn:hover, .ring-theme-switch:hover { color: HighlightText; background: Highlight; }
+}

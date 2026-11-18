@@ -1,0 +1,309 @@
+/* Orbit Shelf's header, collapsible rail, image cards and keyboard search,
+   adapted to the original Tauri screens. Functional states come from the app. */
+:root {
+  color-scheme: only light;
+  --bg: #131413;
+  --surface: #1b1c19;
+  --surface-2: #282820;
+  --line: #38392f;
+  --white: #eeeade;
+  --muted: #d8d7cb;
+  --gold: #e1c181;
+  --gold-deep: #4a402c;
+  --accent: #dfc181;
+  --sage: #b6c6a9;
+  --er-brass: #887448;
+  --er-paper: #f2e4bd;
+  --er-serif: Georgia, "Nanum Myeongjo", "Batang", "바탕", serif;
+}
+/* HeroUI colors the :root canvas. WebView2 must be able to composite through it. */
+html:root, body, #__next { background: transparent; }
+.ring-shell {
+  color-scheme: dark;
+  position: relative;
+  isolation: isolate;
+  height: 100%;
+  overflow: hidden;
+  --rail: 208px;
+  --bar: 60px;
+  --glass-strength: .76;
+  --glass-filter: blur(17px) saturate(1.12);
+  --surface: rgb(30 33 26 / calc(1 - .70 * var(--glass-strength)));
+  --surface-2: rgb(45 46 36 / calc(1 - .34 * var(--glass-strength)));
+  --line: rgb(171 158 115 / .30);
+  --er-chrome: rgb(21 24 19 / calc(1 - .69 * var(--glass-strength)));
+  --er-rail: rgb(22 25 20 / calc(1 - .70 * var(--glass-strength)));
+  --er-field: rgb(17 20 16 / calc(1 - .39 * var(--glass-strength)));
+  --er-dialog: rgb(28 31 24 / calc(1 - .22 * var(--glass-strength)));
+}
+.ring-shell[data-glass="high"] { --glass-strength: 1; }
+.ring-shell[data-glass="off"] { --glass-strength: 0; --glass-filter: none; }
+.ring-shell::before, .ring-shell::after { content: ''; position: absolute; inset: 0; pointer-events: none; }
+.ring-shell::before {
+  z-index: -2;
+  inset: -22px;
+  background: url("/elden-theme/grace-landscape.webp") center 44% / cover no-repeat;
+  transform: scaleX(-1);
+  filter: blur(14px) saturate(.84);
+  opacity: .7;
+  mask-image: linear-gradient(156deg,#000 6%,#0009 50%,#0002 88%);
+}
+.ring-shell::after {
+  z-index: -1;
+  background: linear-gradient(135deg,
+    rgb(20 23 18 / calc(1 - .50 * var(--glass-strength))),
+    rgb(16 20 17 / calc(1 - .40 * var(--glass-strength))) 58%,
+    rgb(17 20 17 / calc(1 - .36 * var(--glass-strength))));
+}
+.ring-shell[data-glass="off"]::before { display: none; }
+.ring-shell :is(.ring-topbar, .ring-sidebar, .panel, .dialog, .ring-palette) { backdrop-filter: var(--glass-filter); }
+.ring-shell[data-rail="collapsed"] { --rail: 64px; }
+.ring-shell .app-shell {
+  display: grid;
+  grid-template: var(--bar) minmax(0,1fr) / var(--rail) minmax(0,1fr);
+  background: transparent;
+}
+.ring-shell .workspace { display: contents; }
+.ring-shell .main { grid-area: 2 / 2; min-width: 0; padding: 23px clamp(18px, 2.5vw, 38px) 35px; }
+.ring-shell .content { max-width: 1460px; }
+.ring-shell .ring-topbar {
+  grid-area: 1 / 1 / 2 / -1;
+  height: auto;
+  display: grid;
+  grid-template-columns: minmax(185px,1fr) minmax(175px,330px) minmax(155px,1fr);
+  align-items: center;
+  gap: 16px;
+  padding: 0 17px 0 13px;
+  background: var(--er-chrome);
+  border-bottom: 1px solid var(--line);
+  z-index: 2;
+}
+.ring-header-brand, .ring-brand, .ring-header-tools, .ring-search-trigger { display: flex; align-items: center; min-width: 0; }
+.ring-header-brand { gap: 12px; }
+.ring-brand { gap: 9px; color: var(--gold); }
+.ring-mark { flex: none; width: 33px; height: 33px; }
+.ring-brand .wordmark { font: 500 17px/1.08 Georgia, serif; letter-spacing: .09em; color: #ede1c0; }
+.ring-brand .brand-sub { font-size: 8px; font-weight: 620; letter-spacing: .29em; margin-top: 3px; color: #b9a780; }
+.ring-rail-toggle { color: var(--muted); width: 31px; height: 33px; }
+.ring-header-tools { justify-content: end; gap: 11px; }
+.ring-current-page { color: var(--muted); font-size: 11px; }
+.ring-topbar .action { font-size: 12px; min-height: 31px; }
+.ring-search-trigger {
+  width: 100%;
+  gap: 10px;
+  color: var(--muted);
+  border: 1px solid var(--line);
+  border-radius: 5px;
+  background: var(--er-field);
+  min-height: 34px;
+  padding: 4px 9px 4px 12px;
+  font-size: 12px;
+  text-align: left;
+}
+.ring-search-trigger:hover { border-color: var(--er-brass); color: var(--white); }
+.ring-search-trigger > svg { width: 16px; height: 16px; color: var(--gold); }
+.ring-search-trigger kbd { margin-left: auto; border: 1px solid #4c4d3e; border-radius: 3px; padding: 0 5px; font: 10px/17px "Segoe UI",sans-serif; white-space: nowrap; }
+.ring-sidebar {
+  grid-area: 2 / 1;
+  min-width: 0;
+  padding: 17px 10px 13px;
+  background: var(--er-rail);
+  border-color: var(--line);
+  overflow-y: auto;
+}
+.ring-sidebar .ring-navigation { margin-top: 0; gap: 5px; }
+.ring-sidebar .nav-item { position: relative; gap: 11px; min-height: 42px; padding: 8px 11px; font-size: 13px; border-radius: 4px; color: #dedccf; }
+.ring-sidebar .nav-item:hover { background: var(--surface-2); }
+.ring-sidebar .nav-item.current { color: var(--er-paper); background: linear-gradient(95deg,#54492bcc,#37372980); border-color: #a7935c59; }
+.ring-sidebar .nav-item.current::before { content: ''; position: absolute; inset: 11px auto 11px -11px; width: 3px; background: var(--gold); }
+.ring-sidebar .nav-item.current > svg:first-child { color: var(--gold); }
+.ring-sidebar .nav-arrow { width: 12px; color: var(--gold); }
+.ring-sidebar .side-status { padding: 14px 7px 0; color: var(--gold); }
+.ring-sidebar .side-status strong { color: var(--er-paper); }
+.ring-shell[data-rail="collapsed"] .ring-sidebar .nav-item { justify-content: center; padding-inline: 0; }
+.ring-shell[data-rail="collapsed"] .ring-sidebar :is(.nav-label, .nav-arrow, .side-status div) { display: none; }
+.ring-shell[data-rail="collapsed"] .side-status { justify-content: center; padding-inline: 0; }
+.ring-shell h1, .ring-shell .hero h2 { font-family: var(--er-serif); font-weight: 600; }
+.ring-shell .page-title { margin-bottom: 15px; }
+.ring-shell .page-title h1 { font-size: clamp(25px,2.3vw,34px); line-height: 1.3; letter-spacing: -.055em; }
+.ring-shell .page-title p { font-size: 13px; margin-top: 4px; color: #f2f0e5; }
+.ring-shell .content > .footnote { color: #f2f0e5; }
+.ring-shell .hero {
+  display: flex;
+  align-items: end;
+  min-height: clamp(218px, 21vw, 345px);
+  padding: clamp(19px,2.6vw,40px);
+  background-color: #282a20;
+  background-image: linear-gradient(90deg,#14160fba, #14160f55 44%, transparent 73%),
+    linear-gradient(0deg,#10110ed6, transparent 50%), url("/elden-theme/grace-landscape.webp");
+  background-position: center, center, 64% center;
+  background-size: cover;
+  border: 1px solid #62573c;
+  border-radius: 6px;
+}
+.ring-shell .hero::before { content: ''; position: absolute; inset: 5px; border: 1px solid #e5d39429; pointer-events: none; }
+.ring-shell .hero-emblem { display: none; }
+.ring-shell .hero-body { max-width: min(73%,780px); }
+.ring-shell .hero-label { color: #f0d99c; letter-spacing: .045em; font-size: 11px; }
+.ring-shell .hero-label svg { color: var(--gold); }
+.ring-shell .hero h2 { color: #fff4d9; margin: 11px 0 7px; font-size: clamp(29px,3.2vw,51px); line-height: 1.28; letter-spacing: -.065em; text-shadow: 0 1px 8px #070907; }
+.ring-shell .hero p { color: #e3e1cc; font-size: 13px; }
+.ring-shell .hero .actions { margin-top: 17px; }
+.ring-shell .action { border-color: #6d6c54; background: var(--surface-2); border-radius: 4px; }
+.ring-shell .action:hover:not(:disabled) { border-color: #897852; background: #3c3a2c; }
+.ring-shell .action.primary { background: #dfc58b; color: #292312; border-color: #ecd4a1; }
+.ring-shell .action.primary:hover:not(:disabled) { background: #f1dba6; }
+.ring-shell .action.hero-secondary { color: #f0eddf; background: #191a14d9; border-color: #85816a; }
+.ring-shell .action.quiet { background: transparent; color: #c4c2b4; border-color: transparent; }
+.ring-shell .shortcuts { gap: 12px; margin: 13px 0 17px; }
+.ring-shell .shortcut {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  align-items: end;
+  min-height: clamp(98px,8.7vw,140px);
+  padding: 15px 17px;
+  gap: 10px;
+  border-color: #514c39;
+  background: var(--surface);
+  border-radius: 5px;
+}
+.ring-shell .shortcut::before {
+  content: ''; position: absolute; inset: 0 0 0 auto; width: 70%; z-index: -2;
+  background-position: 100% 48%; background-repeat: no-repeat; background-size: cover;
+  mask-image: linear-gradient(90deg,transparent,#000 35%);
+}
+.ring-shell .shortcut:first-child::before { background-image: url("/elden-theme/profile-relic.webp"); }
+.ring-shell .shortcut:nth-child(2)::before { background-image: url("/elden-theme/save-relic.webp"); }
+.ring-shell .shortcut::after { content: ''; position: absolute; inset: 0; z-index: -1; background: linear-gradient(90deg,var(--er-rail),#171913ba 32%,#17191345 72%,#181a1240); }
+.ring-shell .shortcut:hover { border-color: #a78d58; }
+.ring-shell .shortcut > svg:first-child { width: 30px; height: 30px; padding: 6px; color: var(--gold); background: #343426b8; border: 1px solid #575238; border-radius: 3px; align-self: end; }
+.ring-shell .shortcut strong { color: #f0e4c3; font-family: var(--er-serif); font-size: 17px; }
+.ring-shell .shortcut small { font-size: 11px; color: #c3c4af; }
+.ring-shell .shortcut > svg:last-child { position: absolute; top: 12px; right: 12px; width: 16px; color: #eee1b9; }
+.ring-shell .panel { background: var(--surface); border-radius: 6px; }
+.ring-shell .panel-head h2 { color: #e9dfc4; font-weight: 620; }
+.ring-shell :is(.integrity,.peek) { background: var(--er-field); border-color: var(--line); }
+.ring-shell :is(.row-icon,.icon-tile) { background: #313125; color: var(--gold); border: 1px solid #494734; border-radius: 4px; }
+.ring-shell .count { border-radius: 4px; color: var(--gold); background: #302d21; border-color: #4c452e; }
+.ring-shell .chip { background: #293024; border-color: #49543f; }
+.ring-shell .field, .ring-shell .check, .ring-shell .facts, .ring-shell .steps { color: #dad7ca; }
+.ring-shell select, .ring-shell input:not([type=checkbox]) { border-color: #4b4b3b; background: var(--er-field); border-radius: 4px; }
+.ring-shell select option { background: #24271f; color: var(--white); }
+.ring-shell .dialog { background: var(--er-dialog); border-color: #827553; border-radius: 6px; }
+.ring-appearance { display: flex; align-items: center; justify-content: space-between; gap: 10px 18px; flex-wrap: wrap; }
+.ring-appearance .field { margin: 0; }
+.ring-appearance p { margin: 3px 0 0; color: var(--muted); font-size: 13px; }
+.ring-appearance select { width: 145px; max-width: 100%; margin: 0; }
+.glass-system-note { display: none; }
+.ring-shell .dialog p { color: #ccc9ba; }
+.ring-shell .notice, .ring-shell .callout { border-radius: 4px; }
+.ring-shell .empty { border-color: #49493b; border-radius: 5px; }
+.ring-shell .empty > svg { color: var(--gold); }
+
+/* Native controls stay visible in every card, including keyboard-only use. */
+.ring-shell .app-shell:has(.ring-sidebar[data-page="profiles"]) .rows {
+  display: grid; grid-template-columns: repeat(auto-fill,minmax(min(100%,238px),1fr)); gap: 10px; border: 0;
+}
+.ring-shell .app-shell:has(.ring-sidebar[data-page="profiles"]) .rows > .row {
+  align-content: start; flex-wrap: wrap; gap: 8px;
+  padding: 13px; border: 1px solid #474635; border-radius: 5px;
+  background: linear-gradient(128deg,var(--surface-2),var(--er-rail));
+}
+.ring-shell .app-shell:has(.ring-sidebar[data-page="profiles"]) .rows > .active-row { border-color: var(--er-brass); }
+.ring-shell .app-shell:has(.ring-sidebar[data-page="profiles"]) .rows .row-text { flex: 1 1 calc(100% - 54px); }
+.ring-shell .ring-palette {
+  width: min(510px,calc(100vw - 30px)); max-height: min(560px,85vh); padding: 0;
+  color: var(--white); background: var(--er-dialog); border: 1px solid #827553; border-radius: 8px;
+  box-shadow: 0 25px 110px #000a;
+}
+.ring-shell :is(.dialog,.ring-palette)::backdrop { background: #080a088a; backdrop-filter: blur(4px); }
+.ring-palette-search { display: flex; align-items: center; gap: 10px; padding: 13px 16px; border-bottom: 1px solid var(--line); color: var(--gold); }
+.ring-palette .ring-palette-search input { flex: 1; min-width: 0; width: auto; border: 0; background: transparent; }
+.ring-result-list { display: grid; padding: 7px; gap: 2px; max-height: 48vh; overflow: auto; }
+.ring-result { display: flex; align-items: center; gap: 12px; width: 100%; padding: 10px 12px; border: 1px solid transparent; border-radius: 4px; background: transparent; color: var(--white); text-align: left; }
+.ring-result[aria-selected="true"], .ring-result:hover { background: #333326; border-color: #565039; }
+.ring-result > svg { color: var(--gold); }
+.ring-result span { flex: 1; min-width: 0; }
+.ring-result strong, .ring-result small { display: block; overflow-wrap: anywhere; }
+.ring-result small, .ring-no-results { color: var(--muted); font-size: 12px; }
+.ring-result > svg:last-child { margin-left: auto; }
+.ring-no-results { padding: 15px; }
+
+/* Keep the headings of both planning tools legible over their own artwork. */
+.ring-shell .app-shell:has(.ring-sidebar[data-page="journal"]) { --folio-art: url("/elden-theme/journal.webp"); }
+.ring-shell .app-shell:has(.ring-sidebar[data-page="planner"]) { --folio-art: url("/elden-theme/planner.webp"); }
+.ring-shell .app-shell:has(.ring-sidebar:is([data-page="journal"],[data-page="planner"])) .page-title {
+  position: relative;
+  isolation: isolate;
+  min-height: 100px;
+  padding: clamp(14px,1.8vw,25px);
+  overflow: hidden;
+  border: 1px solid #544d38;
+  border-radius: 5px;
+  background: var(--surface);
+}
+.ring-shell .app-shell:has(.ring-sidebar:is([data-page="journal"],[data-page="planner"])) .page-title::before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  inset: 0 0 0 auto;
+  width: min(57%,410px);
+  opacity: .84;
+  background: var(--folio-art) right 48% / cover no-repeat;
+  mask-image: linear-gradient(90deg,transparent,black 68%);
+}
+.ring-shell .app-shell:has(.ring-sidebar:is([data-page="journal"],[data-page="planner"])) .page-title :is(h1,p) {
+  text-shadow: 0 1px 5px #15160f;
+}
+.ring-shell .app-shell:has(.ring-sidebar[data-page="journal"]) .page-title {
+  justify-content: flex-start;
+  column-gap: clamp(14px,2vw,30px);
+}
+.ring-shell .panel textarea {
+  font: inherit;
+  color: var(--white);
+  background: var(--er-field);
+  border-color: #4b4b3b;
+  border-radius: 4px;
+}
+.ring-shell .panel :is(progress,input[type="checkbox"]) { accent-color: var(--gold); }
+@media (prefers-reduced-transparency: reduce), (forced-colors: active) {
+  .ring-shell[data-glass] { --glass-strength: 0; --glass-filter: none; }
+  .ring-shell::before { display: none; }
+  .ring-shell :is(.dialog,.ring-palette)::backdrop { backdrop-filter: none; }
+  .glass-system-note { display: block; }
+}
+@media (forced-colors: active) {
+  .ring-shell { background: Canvas; }
+}
+@media (min-width: 1540px) { .ring-shell { --rail: 230px; } }
+@media (max-width: 980px) {
+  .ring-shell { --rail: 164px; }
+  .ring-shell .hero-body { max-width: 88%; }
+  .ring-current-page { display: none; }
+  .ring-shell .ring-topbar { grid-template-columns: minmax(165px,1fr) minmax(150px,290px) minmax(90px,1fr); }
+  .ring-shell .shortcut { padding: 11px; gap: 7px; }
+}
+@media (max-width: 740px) {
+  .ring-shell { --rail: 143px; }
+  .ring-shell[data-rail="expanded"] .ring-sidebar .nav-label { display: inline; }
+  .ring-shell[data-rail="expanded"] .ring-sidebar .nav-item { justify-content: flex-start; }
+  .ring-shell .ring-sidebar .side-status { display: flex; }
+  .ring-shell .main { padding: 15px 12px 25px; }
+  .ring-shell .ring-sidebar { padding: 15px 7px; }
+}
+@media (max-width: 550px) {
+  .ring-shell { --rail: 115px; --bar: 52px; }
+  .ring-shell[data-rail="collapsed"] { --rail: 46px; }
+  .ring-shell .ring-topbar { grid-template-columns: minmax(110px,1fr) minmax(90px,1fr) auto; padding-inline: 6px; gap: 6px; }
+  .ring-header-brand { gap: 3px; }
+  .ring-brand { gap: 5px; }
+  .ring-brand .wordmark { font-size: 12px; }
+  .ring-mark { width: 22px; height: 22px; }
+  .ring-search-trigger kbd { display: none; }
+  .ring-search-trigger { justify-content: center; gap: 4px; padding-inline: 5px; }
+  .ring-shell .shortcuts { grid-template-columns: 1fr; }
+  .ring-shell .hero-body { max-width: 100%; }
+  .ring-shell .hero { padding: 15px; }
+}

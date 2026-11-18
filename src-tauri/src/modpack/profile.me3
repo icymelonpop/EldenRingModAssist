@@ -1,0 +1,8 @@
+profileVersion = "v1"
+
+[[supports]]
+game = "eldenring"
+
+[[packages]]
+id = "eldenring-mod-assist"
+path = "mod"

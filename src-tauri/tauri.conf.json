@@ -1,0 +1,59 @@
+{
+  "$schema": "https://schema.tauri.app/config/2",
+  "productName": "Elden Ring Mod Assist · 황금나무",
+  "version": "1.2.0",
+  "identifier": "app.eldenring.modassist",
+  "build": {
+    "beforeDevCommand": "pnpm run dev",
+    "beforeBuildCommand": "pnpm run build",
+    "devUrl": "http://localhost:3000",
+    "frontendDist": "../out"
+  },
+  "bundle": {
+    "active": true,
+    "category": "Utility",
+    "targets": [
+      "nsis"
+    ],
+    "icon": [
+      "icons/icon.ico"
+    ],
+    "shortDescription": "Elden Ring profile switcher",
+    "licenseFile": "LICENSE",
+    "windows": {
+      "nsis": {
+        "installMode": "currentUser"
+      }
+    }
+  },
+  "app": {
+    "withGlobalTauri": true,
+    "windows": [
+      {
+        "title": "Elden Ring Mod Assist · 황금나무",
+        "width": 1180,
+        "height": 800,
+        "minWidth": 780,
+        "minHeight": 570,
+        "center": true,
+        "theme": "Dark",
+        "decorations": false,
+        "transparent": true,
+        "windowEffects": {
+          "effects": [
+            "acrylic"
+          ],
+          "color": [
+            20,
+            23,
+            22,
+            48
+          ]
+        }
+      }
+    ],
+    "security": {
+      "csp": "default-src 'self'; connect-src ipc: http://ipc.localhost; style-src 'self' 'unsafe-inline'; img-src 'self' asset: data:; script-src 'self'"
+    }
+  }
+}

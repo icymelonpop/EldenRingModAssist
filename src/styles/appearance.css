@@ -1,0 +1,162 @@
+/* The page canvas stays transparent in both modes so the native backdrop can show through. */
+.ring-shell {
+  color: var(--white);
+  --er-selection: #48412e;
+  --er-selection-ink: #f4e6bf;
+  --er-control-line: #746d56;
+}
+
+.ring-shell[data-theme-mode="light"] {
+  color-scheme: light;
+  --bg: #f5f4ef;
+  --white: #242824;
+  --muted: #494d46;
+  --gold: #71511d;
+  --gold-deep: #ddd1af;
+  --accent: #71511d;
+  --sage: #385b43;
+  --er-brass: #876b3e;
+  --er-paper: #41351f;
+  --line: rgb(54 55 44 / .27);
+  --surface: rgb(255 254 249 / calc(1 - .47 * var(--glass-strength)));
+  --surface-2: rgb(245 244 237 / calc(1 - .22 * var(--glass-strength)));
+  --er-chrome: rgb(251 250 246 / calc(1 - .50 * var(--glass-strength)));
+  --er-rail: rgb(245 244 237 / calc(1 - .58 * var(--glass-strength)));
+  --er-field: rgb(255 255 252 / calc(1 - .26 * var(--glass-strength)));
+  --er-dialog: rgb(251 250 245 / calc(1 - .09 * var(--glass-strength)));
+  --er-selection: #e8dfc9;
+  --er-selection-ink: #4a3615;
+  --er-control-line: #938f7f;
+}
+.ring-shell[data-theme-mode="light"]::before { opacity: .46; }
+.ring-shell[data-theme-mode="light"]::after {
+  background: linear-gradient(135deg,
+    rgb(255 254 249 / calc(1 - .27 * var(--glass-strength))),
+    rgb(248 247 242 / calc(1 - .235 * var(--glass-strength))) 58%,
+    rgb(246 246 240 / calc(1 - .21 * var(--glass-strength))));
+}
+.ring-shell[data-theme-mode="light"] * { scrollbar-color: #878b7e transparent; }
+.ring-shell[data-theme-mode="light"] ::selection { color: #fff; background: #665326; }
+.ring-shell[data-theme-mode="light"] .ring-brand .wordmark { color: #3f3726; }
+.ring-shell[data-theme-mode="light"] .ring-brand .brand-sub { color: #655338; }
+.ring-shell[data-theme-mode="light"] .ring-search-trigger kbd { border-color: var(--line); }
+.ring-shell[data-theme-mode="light"] .ring-sidebar .nav-item { color: #353a34; }
+.ring-shell[data-theme-mode="light"] .ring-sidebar .nav-item.current {
+  color: var(--er-selection-ink);
+  background: linear-gradient(100deg, #e2d5b6df, #e9e3d39c);
+  border-color: #a6936b;
+}
+.ring-shell[data-theme-mode="light"] .page-title p,
+.ring-shell[data-theme-mode="light"] .content > .footnote { color: #373c35; }
+.ring-shell[data-theme-mode="light"] .panel {
+  box-shadow: inset 0 1px 0 #ffffffab, 0 2px 5px #40392508;
+}
+.ring-shell[data-theme-mode="light"] .panel-head h2 { color: var(--white); }
+.ring-shell[data-theme-mode="light"] :is(.field, .check, .facts, .steps) { color: #373b33; }
+.ring-shell[data-theme-mode="light"] :is(.count, .row-icon, .icon-tile) {
+  background: #eae5d6;
+  border-color: #b5ab8c;
+}
+.ring-shell[data-theme-mode="light"] .chip {
+  background: #e5ece0;
+  border-color: #9cab92;
+}
+.ring-shell[data-theme-mode="light"] .notice {
+  color: #2e4735;
+  background: #e5ece1;
+  border-color: #a9b4a0;
+}
+.ring-shell[data-theme-mode="light"] :is(.notice.warning, .callout) {
+  color: #62471c;
+  background: #f4ead3;
+  border-color: #c4af82;
+}
+.ring-shell[data-theme-mode="light"] .progress-body progress::-webkit-progress-bar { background: #cad2c2; }
+.ring-shell[data-theme-mode="light"] .integrity > svg { color: #606557; }
+.ring-shell[data-theme-mode="light"] .integrity.good > svg { color: var(--sage); }
+.ring-shell[data-theme-mode="light"] .integrity.warn > svg { color: var(--gold); }
+.ring-shell[data-theme-mode="light"] .action { border-color: var(--er-control-line); }
+.ring-shell[data-theme-mode="light"] .action:hover:not(:disabled) {
+  color: var(--white);
+  background: #e7e5dc;
+  border-color: #89836e;
+}
+.ring-shell[data-theme-mode="light"] .action.primary {
+  color: #fffcf4;
+  background: #5b4827;
+  border-color: #574326;
+}
+.ring-shell[data-theme-mode="light"] .action.primary:hover:not(:disabled) { color: #fff; background: #4b381c; }
+.ring-shell[data-theme-mode="light"] .action.quiet { color: var(--muted); border-color: transparent; }
+.ring-shell[data-theme-mode="light"] .icon-btn:hover { background: #302d2110; }
+.ring-shell[data-theme-mode="light"] :is(select, input:not([type="checkbox"],[type="radio"]), textarea),
+.ring-shell[data-theme-mode="light"] .empty { border-color: var(--er-control-line); }
+.ring-shell[data-theme-mode="light"] select option { background: #faf9f5; }
+.ring-shell[data-theme-mode="light"] :is(input, textarea)::placeholder { color: #60645b; }
+.ring-shell[data-theme-mode="light"] .dialog { border-color: #9b9178; box-shadow: 0 18px 70px #2822164a; }
+.ring-shell[data-theme-mode="light"] .dialog p { color: var(--muted); }
+.ring-shell[data-theme-mode="light"] .dialog p.callout { color: #62471c; }
+.ring-shell[data-theme-mode="light"] .dialog ul[aria-label] { background: var(--er-field); }
+.ring-shell[data-theme-mode="light"] :is(.dialog,.ring-palette)::backdrop { background: #2d30274a; }
+.ring-shell[data-theme-mode="light"] :is(.ring-result[aria-selected="true"], .ring-result:hover, .panel button[aria-pressed="true"], [role="group"] button[aria-pressed="true"], .dialog button[aria-pressed="true"]) {
+  color: var(--er-selection-ink);
+  background: var(--er-selection);
+  border-color: #a28c66;
+}
+.ring-shell[data-theme-mode="light"] .app-shell:has(.ring-sidebar[data-page="profiles"]) .rows > .row { border-color: var(--line); }
+.ring-shell[data-theme-mode="light"] .app-shell:has(.ring-sidebar[data-page="profiles"]) .rows > .active-row { border-color: var(--er-brass); }
+
+/* Photograph captions retain their own contrast regardless of the window underneath. */
+.ring-shell[data-theme-mode="light"] .hero { --gold: #efd398; }
+.ring-shell[data-theme-mode="light"] .hero .action.primary { color: #302613; background: #e3ca92; border-color: #eedaad; }
+.ring-shell[data-theme-mode="light"] .hero .action.primary:hover:not(:disabled) { background: #f0deab; }
+.ring-shell[data-theme-mode="light"] .hero .hero-secondary { color: #f2efe4; background: #1c2019d9; border-color: #aba58e; }
+.ring-shell[data-theme-mode="light"] .hero .hero-secondary:hover:not(:disabled) { color: white; background: #36382a; }
+.ring-shell[data-theme-mode="light"] .shortcut { background: var(--surface); border-color: #aaa28d; }
+.ring-shell[data-theme-mode="light"] .shortcut:hover { border-color: var(--er-brass); }
+.ring-shell[data-theme-mode="light"] .shortcut::after {
+  background: linear-gradient(90deg,#f6f4ebf5 3%,#f5f2e8ed 39%,#f1eddeca 55%,#f0ecdf06 83%);
+}
+.ring-shell[data-theme-mode="light"] .shortcut strong { color: #302c20; }
+.ring-shell[data-theme-mode="light"] .shortcut small { color: #414338; }
+.ring-shell[data-theme-mode="light"] .shortcut > svg:first-child { color: var(--gold); background: #f8f4e6; border-color: #ada082; }
+.ring-shell[data-theme-mode="light"] .app-shell:has(.ring-sidebar:is([data-page="journal"],[data-page="planner"])) .page-title { border-color: var(--line); }
+.ring-shell[data-theme-mode="light"] .app-shell:has(.ring-sidebar:is([data-page="journal"],[data-page="planner"])) .page-title::before {
+  opacity: .72;
+  mask-image: linear-gradient(90deg,transparent 5%,#0004 42%,black);
+}
+.ring-shell[data-theme-mode="light"] .app-shell:has(.ring-sidebar:is([data-page="journal"],[data-page="planner"])) .page-title :is(h1,p) { text-shadow: none; }
+
+.ring-appearance + .ring-appearance { margin-top: 15px; padding-top: 15px; border-top: 1px solid var(--line); }
+.ring-mode-picker { display: inline-flex; max-width: 100%; gap: 2px; padding: 3px; border: 1px solid var(--line); border-radius: 6px; background: var(--er-field); }
+.ring-mode-picker label { position: relative; cursor: pointer; }
+.ring-shell .ring-mode-picker input[type="radio"] {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  border: 0;
+  clip-path: inset(50%);
+}
+.ring-mode-picker label > span {
+  display: inline-flex;
+  min-height: 29px;
+  gap: 6px;
+  align-items: center;
+  justify-content: center;
+  padding: 2px 10px;
+  border: 1px solid transparent;
+  border-radius: 3px;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 600;
+}
+.ring-mode-picker label:hover > span { background: var(--surface-2); }
+.ring-mode-picker input:checked + span { color: var(--er-selection-ink); background: var(--er-selection); border-color: var(--er-control-line); }
+.ring-mode-picker input:focus-visible + span { outline: 2px solid var(--gold); outline-offset: 1px; }
+.ring-mode-picker svg { width: 15px; height: 15px; }
+
+@media (forced-colors: active) {
+  .ring-shell .ring-mode-picker input:checked + span { border-color: Highlight; }
+  .ring-shell .ring-sidebar .nav-item.current { outline: 1px solid Highlight; }
+}
